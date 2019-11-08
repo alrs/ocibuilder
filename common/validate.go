@@ -17,10 +17,11 @@ limitations under the License.
 package common
 
 import (
+	"os"
+
 	"github.com/ocibuilder/ocibuilder/common/context"
 	"github.com/ocibuilder/ocibuilder/pkg/apis/ocibuilder/v1alpha1"
 	"github.com/pkg/errors"
-	"os"
 )
 
 // Validate validates a ocibuilder spec.
@@ -102,6 +103,9 @@ func ValidatePush(spec v1alpha1.OCIBuilderSpec) error {
 func ValidatePushSpec(spec v1alpha1.PushSpec) error {
 	if spec.Registry == "" {
 		return errors.New("push registry must be specified for push")
+	}
+	if spec.User == "" {
+		return errors.New("user must be specified for push")
 	}
 	if spec.Image == "" {
 		return errors.New("image name must be specified for push")
